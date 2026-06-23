@@ -18,7 +18,7 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: auto; } /* Disabled smooth scroll to not conflict with video scrubbing */
+html { scroll-behavior: auto; } /* Native scroll for smooth touch & wheel */
 body { font-family: var(--font-ar); background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.7; -webkit-font-smoothing: antialiased; }
 ::selection { background: var(--accent); color: var(--bg); }
 img { max-width: 100%; display: block; }
@@ -62,18 +62,18 @@ button { font-family: inherit; }
 .mobile-menu.open a:nth-child(1) { transition-delay: 0.1s; } .mobile-menu.open a:nth-child(2) { transition-delay: 0.2s; } .mobile-menu.open a:nth-child(3) { transition-delay: 0.3s; } .mobile-menu.open a:nth-child(4) { transition-delay: 0.4s; } .mobile-menu.open a:nth-child(5) { transition-delay: 0.5s; }
 .mobile-menu a:hover { color: var(--accent); }
 
-/* Hero - Scroll Driven Video Setup */
-.hero { position: relative; height: 250vh; } /* Extended height to allow scrubbing */
-.hero-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; background: var(--bg-1); }
-.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+/* Hero - The Scroll Driven Container */
+.hero { position: relative; height: 200vh; width: 100%; } /* 100vh extra space for scrubbing */
+.hero-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; background: var(--bg-1); display: flex; align-items: center; justify-content: center; }
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; object-position: center; }
 .hero-overlay { position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, var(--bg-1) 100%); }
 .hero-content { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 2rem; text-align: center; will-change: transform, opacity; }
 .hero-tag { font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.4em; color: var(--accent); margin-bottom: 1.5rem; text-transform: uppercase; opacity: 0; animation: heroFade 1s ease 1.8s forwards; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-.hero-title { font-family: var(--font-ar-d); font-size: clamp(3rem, 9vw, 7rem); font-weight: 800; line-height: 1.1; margin-bottom: 2rem; max-width: 900px; opacity: 0; animation: heroFade 1.2s ease 2s forwards; text-shadow: 0 4px 20px rgba(0,0,0,0.9); }
+.hero-title { font-family: var(--font-ar-d); font-size: clamp(2.5rem, 8vw, 7rem); font-weight: 800; line-height: 1.1; margin-bottom: 2rem; max-width: 900px; opacity: 0; animation: heroFade 1.2s ease 2s forwards; text-shadow: 0 4px 20px rgba(0,0,0,0.9); }
 .hero-title span { color: var(--accent); position: relative; display: inline-block; }
 .hero-title span::after { content: ''; position: absolute; bottom: -10px; right: 0; width: 100%; height: 3px; background: var(--accent); transform: scaleX(0); transform-origin: right; animation: underGrow 1s ease 3s forwards; }
 @keyframes underGrow { to { transform: scaleX(1); } } @keyframes heroFade { to { opacity: 1; transform: translateY(0); } }
-.hero-subtitle { font-size: clamp(1rem, 2vw, 1.25rem); color: var(--text); max-width: 650px; margin-bottom: 3rem; line-height: 1.9; opacity: 0; animation: heroFade 1.2s ease 2.3s forwards; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
+.hero-subtitle { font-size: clamp(0.9rem, 1.8vw, 1.25rem); color: var(--text); max-width: 650px; margin-bottom: 3rem; line-height: 1.9; opacity: 0; animation: heroFade 1.2s ease 2.3s forwards; text-shadow: 0 2px 10px rgba(0,0,0,0.9); padding: 0 1rem; }
 .hero-buttons { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; opacity: 0; animation: heroFade 1.2s ease 2.6s forwards; }
 @keyframes heroFade { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 .btn { padding: 1.1rem 2.5rem; border: none; cursor: pointer; font-size: 1rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.4s var(--ease); position: relative; overflow: hidden; }
@@ -258,7 +258,8 @@ section { padding: 8rem 2rem; position: relative; }
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
 }
 @media (max-width: 768px) {
-  .nav-menu { display: none; } .hamburger { display: block; }
+  .nav-menu { display: none; } 
+  .hamburger { display: block; }
   section { padding: 5rem 1.5rem; }
   .services-grid { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
@@ -310,7 +311,7 @@ section { padding: 8rem 2rem; position: relative; }
 <!-- Hero -->
 <header class="hero" id="hero">
   <div class="hero-sticky">
-    <!-- NO AUTOPLAY. NO LOOP. Scroll Controlled. -->
+    <!-- No Autoplay. Scrubbed by Native Scroll (Mouse & Touch) -->
     <video class="hero-video" id="heroVideo" muted playsinline preload="auto">
       <source src="video.mp4" type="video/mp4">
     </video>
@@ -537,60 +538,55 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = '';
   }));
 
-  // --- SCROLL DRIVEN VIDEO (PREMIUM SCRUBBING) ---
+  // --- SCROLL DRIVEN VIDEO (NATIVE SCROLL - DESKTOP & MOBILE) ---
   const heroSection = document.getElementById('hero');
   const heroVideo = document.getElementById('heroVideo');
   const heroContent = document.getElementById('heroContent');
-
-  let targetProgress = 0;
-  let currentProgress = 0;
   let isVideoReady = false;
 
   heroVideo.addEventListener('loadedmetadata', () => { isVideoReady = true; });
   if (heroVideo.readyState >= 2) isVideoReady = true;
 
-  function updateScrollTarget() {
+  let ticking = false;
+  
+  function updateVideoScroll() {
     const rect = heroSection.getBoundingClientRect();
-    const maxScroll = heroSection.offsetHeight - window.innerHeight;
+    const scrollableDistance = heroSection.offsetHeight - window.innerHeight;
     
-    // Calculate raw scroll progress between 0 and 1
-    if (rect.top >= 0) {
-      targetProgress = 0;
-    } else if (rect.bottom <= window.innerHeight) {
-      targetProgress = 1;
-    } else {
-      targetProgress = Math.abs(rect.top) / maxScroll;
-    }
-    
-    targetProgress = Math.max(0, Math.min(1, targetProgress));
-  }
+    // Calculate scroll progress between 0 and 1 based on element position
+    let scrollProgress = -rect.top / scrollableDistance;
+    scrollProgress = Math.max(0, Math.min(1, scrollProgress));
 
-  function animateScrub() {
-    // Smooth Interpolation (Lerp)
-    currentProgress += (targetProgress - currentProgress) * 0.08; 
-    
-    // Scrub the video
+    // Scrub the video natively based on scroll progress
     if (isVideoReady && heroVideo.duration) {
-      const targetTime = currentProgress * heroVideo.duration;
-      // Only update if difference is noticeable to avoid performance issues
-      if (Math.abs(heroVideo.currentTime - targetTime) > 0.01) {
+      const targetTime = scrollProgress * heroVideo.duration;
+      // Prevent micro-stutters by only updating if the change is significant
+      if (Math.abs(heroVideo.currentTime - targetTime) > 0.02) {
         heroVideo.currentTime = targetTime;
       }
     }
 
     // Fade out hero text smoothly as we scroll down
-    const fade = Math.max(0, 1 - (currentProgress * 1.5)); 
+    const fade = Math.max(0, 1 - (scrollProgress * 1.5)); 
     heroContent.style.opacity = fade;
-    heroContent.style.transform = `translateY(${currentProgress * -80}px)`; // Subtle parallax
+    heroContent.style.transform = `translateY(${scrollProgress * -80}px)`;
 
-    requestAnimationFrame(animateScrub);
+    ticking = false;
   }
 
-  window.addEventListener('scroll', updateScrollTarget, { passive: true });
-  window.addEventListener('resize', updateScrollTarget);
+  function onScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(updateVideoScroll);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('touchmove', onScroll, { passive: true }); // Explicit mobile support
+  window.addEventListener('resize', updateVideoScroll);
   
-  updateScrollTarget();
-  requestAnimationFrame(animateScrub);
+  // Initial call
+  updateVideoScroll();
 
   // --- Intersection Observer for Reveal & Stats ---
   const reveals = document.querySelectorAll('.reveal');
