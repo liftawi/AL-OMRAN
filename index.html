@@ -17,10 +17,9 @@
   --font-ar: 'Almarai', sans-serif; --font-ar-d: 'Almarai', sans-serif;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
-/* إزالة المربع الأزرق وتقليل حجم الخطوط العامة قليلاً */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html { scroll-behavior: auto; }
-body { font-family: var(--font-ar); background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.8; -webkit-font-smoothing: antialiased; font-size: 15px; }
+html { scroll-behavior: smooth; max-width: 100%; overflow-x: hidden; }
+body { font-family: var(--font-ar); background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.8; -webkit-font-smoothing: antialiased; font-size: 15px; max-width: 100%; }
 ::selection { background: var(--accent); color: var(--bg); }
 img { max-width: 100%; display: block; }
 a, button, .service-card, .portfolio-item { color: inherit; text-decoration: none; outline: none; -webkit-tap-highlight-color: transparent; }
@@ -44,8 +43,8 @@ button { font-family: inherit; }
 /* Navbar */
 .navbar { position: fixed; top: 0; right: 0; width: 100%; padding: 1.5rem 0; z-index: 100; transition: all 0.4s var(--ease); }
 .navbar.scrolled { background: var(--glass); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); padding: 1rem 0; }
-.nav-container { max-width: 1400px; margin: 0 auto; padding: 0 3rem; display: flex; align-items: center; justify-content: space-between; }
-.logo { font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; letter-spacing: 0.25em; z-index: 101; }
+.nav-container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; letter-spacing: 0.25em; z-index: 101; }
 .logo span { color: var(--accent); }
 .nav-menu { display: flex; list-style: none; gap: 2.5rem; align-items: center; }
 .nav-link { font-size: 0.9rem; position: relative; padding: 0.5rem 0; transition: color 0.3s ease; }
@@ -63,11 +62,10 @@ button { font-family: inherit; }
 .mobile-menu.open a:nth-child(1) { transition-delay: 0.1s; } .mobile-menu.open a:nth-child(2) { transition-delay: 0.2s; } .mobile-menu.open a:nth-child(3) { transition-delay: 0.3s; } .mobile-menu.open a:nth-child(4) { transition-delay: 0.4s; } .mobile-menu.open a:nth-child(5) { transition-delay: 0.5s; }
 .mobile-menu a:hover { color: var(--accent); }
 
-/* Hero */
-.hero { position: relative; height: 200vh; width: 100%; }
-.hero-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; background: var(--bg-1); display: flex; align-items: center; justify-content: center; }
-.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; object-position: center; }
-.hero-mobile-img { display: none; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+/* Hero - صورة ثابتة للكمبيوتر والهاتف */
+.hero { position: relative; height: 100vh; width: 100%; }
+.hero-sticky { position: relative; height: 100vh; overflow: hidden; background: var(--bg-1); display: flex; align-items: center; justify-content: center; }
+.hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; object-position: center; }
 .hero-overlay { position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 30%, rgba(0,0,0,0.3) 70%, var(--bg-1) 100%); }
 .hero-content { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 2rem; text-align: center; will-change: transform, opacity; }
 .hero-tag { font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.4em; color: var(--accent); margin-bottom: 1.5rem; text-transform: uppercase; opacity: 0; animation: heroFade 1s ease 1.8s forwards; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
@@ -88,7 +86,7 @@ button { font-family: inherit; }
 .scroll-line::after { content: ''; position: absolute; top: -50%; left: 0; width: 100%; height: 50%; background: var(--accent); animation: scrollAnim 2s infinite; }
 @keyframes scrollAnim { 0% { top: -50%; } 100% { top: 100%; } }
 
-/* Sections - Increased Padding for Spaciousness */
+/* Sections */
 section { padding: 10rem 3rem; position: relative; }
 .section-container { max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
 .section-header { text-align: center; margin-bottom: 6rem; }
@@ -98,7 +96,7 @@ section { padding: 10rem 3rem; position: relative; }
 .shape { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
 .shape-orange { background: var(--accent-glow); }
 
-/* Services - Increased Gap */
+/* Services */
 .services { background: var(--bg-1); }
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
 .service-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; padding: 3.5rem 2.5rem; position: relative; overflow: hidden; transition: all 0.5s var(--ease); cursor: pointer; }
@@ -151,7 +149,7 @@ section { padding: 10rem 3rem; position: relative; }
 .stat-number { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 0.5rem; }
 .stat-label { color: var(--text-muted); font-size: 0.9rem; }
 
-/* About - Increased Gap */
+/* About */
 .about { background: var(--bg); }
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
 .about-content .section-tag { text-align: right; }
@@ -259,19 +257,15 @@ section { padding: 10rem 3rem; position: relative; }
   .contact-grid { grid-template-columns: 1fr; }
   .about-grid { grid-template-columns: 1fr; gap: 4rem; }
   section { padding: 8rem 2rem; }
+  .nav-container { padding: 0 2rem; }
 }
+
 @media (max-width: 768px) {
   .nav-menu { display: none; } 
   .hamburger { display: block; }
   .nav-container { padding: 0 1.5rem; }
   section { padding: 6rem 1.5rem; }
   .section-header { margin-bottom: 4rem; }
-  
-  /* Fix Hero on Mobile: Show Image instead of Video */
-  .hero { height: 100vh; }
-  .hero-sticky { position: relative; height: 100%; min-height: 100vh; }
-  .hero-video { display: none; }
-  .hero-mobile-img { display: block; }
   
   .services-grid { grid-template-columns: 1fr; gap: 2rem; }
   .service-card { padding: 2.5rem 2rem; }
@@ -325,12 +319,8 @@ section { padding: 10rem 3rem; position: relative; }
 <!-- Hero -->
 <header class="hero" id="hero">
   <div class="hero-sticky">
-    <!-- Desktop Video -->
-    <video class="hero-video" id="heroVideo" muted playsinline preload="auto">
-      <source src="video.mp4" type="video/mp4">
-    </video>
-    <!-- Mobile Image (Beautiful dark luxury interior matching colors) -->
-    <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=1920&q=80" class="hero-mobile-img" alt="AL OMRAN Interior Design">
+    <!-- صورة فاخرة للكمبيوتر والهاتف -->
+    <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=1920&q=80" class="hero-img" alt="AL OMRAN Interior Design">
     
     <div class="hero-overlay"></div>
     <div class="hero-content" id="heroContent">
@@ -533,12 +523,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Scroll Progress & Navbar ---
   const navbar = document.getElementById('navbar');
   const scrollBar = document.getElementById('scrollProgress');
+  const heroContent = document.getElementById('heroContent');
+
   window.addEventListener('scroll', () => {
     const winH = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrolled = (window.scrollY / winH) * 100;
     scrollBar.style.width = scrolled + '%';
     if (window.scrollY > 50) navbar.classList.add('scrolled');
     else navbar.classList.remove('scrolled');
+
+    // Simple Parallax effect for Hero Text on scroll
+    const scrollY = window.scrollY;
+    const fade = Math.max(0, 1 - (scrollY / (window.innerHeight * 0.5))); 
+    heroContent.style.opacity = fade;
+    heroContent.style.transform = `translateY(${scrollY * 0.3}px)`;
   }, { passive: true });
 
   // --- Mobile Menu ---
@@ -554,64 +552,6 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenu.classList.remove('open');
     document.body.style.overflow = '';
   }));
-
-  // --- VIDEO LOGIC: SMOOTH SCRUB ON DESKTOP ONLY ---
-  const heroSection = document.getElementById('hero');
-  const heroVideo = document.getElementById('heroVideo');
-  const heroContent = document.getElementById('heroContent');
-  let isVideoReady = false;
-  let isMobile = window.matchMedia("(max-width: 768px)").matches || ('ontouchstart' in window);
-
-  heroVideo.addEventListener('loadedmetadata', () => { isVideoReady = true; });
-  if (heroVideo.readyState >= 2) isVideoReady = true;
-
-  if (isMobile) {
-    // Mobile uses an image, so we only apply a simple parallax to the text.
-    window.addEventListener('scroll', () => {
-      const scrolled = window.scrollY;
-      const fade = Math.max(0, 1 - (scrolled / (window.innerHeight * 0.5))); 
-      heroContent.style.opacity = fade;
-      heroContent.style.transform = `translateY(${scrolled * 0.2}px)`;
-    }, { passive: true });
-    
-  } else {
-    // Desktop: Ultra-Smooth Scroll Driven Video Scrubbing
-    let scrollY = window.scrollY;
-    let ticking = false;
-
-    function updateScrub() {
-      const heroHeight = heroSection.offsetHeight;
-      const maxScroll = heroHeight - window.innerHeight;
-      
-      let progress = scrollY / maxScroll;
-      progress = Math.max(0, Math.min(1, progress));
-
-      if (isVideoReady && heroVideo.duration) {
-        const targetTime = progress * heroVideo.duration;
-        if (Math.abs(heroVideo.currentTime - targetTime) > 0.05) {
-          heroVideo.currentTime = targetTime;
-        }
-      }
-
-      const fade = Math.max(0, 1 - (progress * 1.5)); 
-      heroContent.style.opacity = fade;
-      heroContent.style.transform = `translateY(${progress * -80}px)`;
-
-      ticking = false;
-    }
-
-    function onScroll() {
-      scrollY = window.scrollY;
-      if (!ticking) {
-        window.requestAnimationFrame(updateScrub);
-        ticking = true;
-      }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', updateScrub);
-    updateScrub();
-  }
 
   // --- Intersection Observer for Reveal & Stats ---
   const reveals = document.querySelectorAll('.reveal');
